@@ -11,6 +11,7 @@ public class CommonController {
 
     @GetMapping("/")
     public String loginView(){
+        System.out.println("commit check");
         return "thymeleaf/login";
     }
 }
