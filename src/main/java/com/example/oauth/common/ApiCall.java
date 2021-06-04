@@ -8,35 +8,57 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Service;
-
-import java.beans.Encoder;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public class ApiCall {
     static Logger logger = LoggerFactory.getLogger(ApiCall.class);
 
-    public static JSONObject callPostApi(String urlInfo, String param) throws IOException {
+    public static JSONObject callPostApi(String urlInfo, Map<String, String> paramMap) throws IOException {
+        URL url = new URL(urlInfo);
+        String param = createUrl(paramMap);
+        byte[] postDataBytes = param.toString().getBytes(StandardCharsets.UTF_8.name());
+
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        connection.setRequestMethod(HttpMethod.POST.name());
+        connection.setRequestProperty("Content-Type", ContentType.APPLICATION_URLENCODED.getType());
+        connection.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+        connection.setDoOutput(true);
+        connection.getOutputStream().write(postDataBytes); // POST 호출
+
+        return getResponse(connection);
+    }
+
+    public static JSONObject callPostApi(String urlInfo, String key, String value) throws IOException {
+        URL url = new URL(urlInfo);
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        connection.setRequestMethod(HttpMethod.POST.name());
+        connection.setRequestProperty(key, value);
+
+        return getResponse(connection);
+    }
+
+    public static JSONObject callGetApi(String urlInfo, String param) throws IOException {
         URL url = new URL(urlInfo + param);
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-
-        connection.setRequestMethod(HttpMethod.POST.name());
+        connection.setRequestMethod(HttpMethod.GET.name());
         connection.setRequestProperty("Content-type", ContentType.APPLICATION_JSON.getType());
 
+        return getResponse(connection);
+    }
+
+    private static JSONObject getResponse(HttpURLConnection connection) throws IOException{
         BufferedReader br;
         InputStream inputStream;
 
         if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
-            br = new BufferedReader(new InputStreamReader(connection.getInputStream(), "UTF-8"));
+            br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8.name()));
         else
-            br = new BufferedReader(new InputStreamReader(connection.getErrorStream(), "UTF-8"));
+            br = new BufferedReader(new InputStreamReader(connection.getErrorStream(), StandardCharsets.UTF_8.name()));
 
         StringBuilder result = new StringBuilder();
         String line = "";

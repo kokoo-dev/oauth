@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,26 +33,33 @@ public class KakaoController {
     KakaoService kakaoService;
 
     @GetMapping("/oauth")
-    public ModelAndView oauth(Kakao kakao, HttpServletRequest request){
-        logger.info("call.. oauth" + request.getMethod());
+    public ModelAndView oauth(Kakao kakao, HttpSession session){
+        logger.info("call.. oauth");
 
         JSONObject tokenObject = kakaoService.getToken(kakao.getCode());
-
-        logger.info(tokenObject.toString());
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("thymeleaf/loginAfter");
         mav.addObject("token", tokenObject);
+        session.setAttribute("kakaoToken", tokenObject.get("access_token"));
+
+        logger.info(tokenObject.toString());
 
         return mav;
     }
 
     @PostMapping("/logout")
-    public void logout(Kakao kakao) throws Exception{
-        logger.info("call.. logout" + kakao.getAccessToken());
+    public String logout(Kakao kakao, HttpSession session) throws Exception{
+        logger.info("call.. logout");
 
         JSONObject logoutObject = kakaoService.logout(kakao.getAccessToken());
 
+        if(session.getAttribute("kakaoToken") != null && logoutObject.get("id") != null){
+            session.removeAttribute("kakaoToken");
+        }
+
         logger.info(logoutObject.toString());
+
+        return "redirect:/";
     }
 }

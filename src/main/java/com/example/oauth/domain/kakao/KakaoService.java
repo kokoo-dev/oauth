@@ -24,7 +24,7 @@ public class KakaoService {
         JSONObject jsonObject = null;
 
         try {
-            jsonObject = ApiCall.callPostApi(requestUrl, param);
+            jsonObject = ApiCall.callGetApi(requestUrl, param);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }
@@ -33,13 +33,11 @@ public class KakaoService {
     }
 
     public JSONObject logout(String accessToken){
-        Map<String, String> paramMap = createLogoutParamMap(accessToken);
         String requestUrl = KakaoRestApi.API_HOST.getValue() + KakaoRestApi.LOGOUT_PATH.getValue();
-        String param = ApiCall.createUrl(paramMap);
         JSONObject jsonObject = null;
 
         try {
-            jsonObject = ApiCall.callPostApi(requestUrl, param);
+            jsonObject = ApiCall.callPostApi(requestUrl, KakaoLogout.AUTHORIZATION.getKey(), "Bearer " + accessToken);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }
