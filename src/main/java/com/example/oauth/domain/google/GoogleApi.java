@@ -15,4 +15,10 @@ import org.springframework.context.annotation.PropertySource;
 public class GoogleApi {
     private String clientId;
     private String clientPassword;
+    private String authHost;
+    private String authPath;
+    private String redirectUri;
+    private String responseType;
+    private String scope;
+    private String access_type;
 }

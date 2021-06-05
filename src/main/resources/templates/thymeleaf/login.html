@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Hello</title>
 </head>
 <body>
-    <a th:href="${kakaoUrl}">
-       kakao
-    </a>
-    <a href="">
-        google
-    </a>
-    <a>
-        facebook
-    </a>
-    <a>
-        naver
-    </a>
+    <input type="button" th:onclick="javascript:move([[${kakaoUrl}]])" value="kakao"/>
+    <input type="button" th:onclick="move([[${googleUrl}]]);" value="google"/>
+    <input type="button" onclick="move('facebook');" value="facebook"/>
+    <input type="button" onclick="move('naver');" value="naver"/>
+
     <form method="post" name="" id="" action="">
         <input type="hidden" name="" value="">
         <input type="hidden" name="" value="">
     </form>
+
+    <script>
+        function move(url){
+            location.href = url;
+        }
+    </script>
 </body>
 </html>

@@ -20,4 +20,7 @@ public class KakaoApi {
     private String logoutPath;
     private String apiKey;
     private String redirectUri;
+    private String responseType;
+    private String grantType;
+    private String logoutType;
 }
