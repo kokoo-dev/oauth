@@ -21,7 +21,7 @@ public class ApiCall {
     public static JSONObject callPostApi(String urlInfo, Map<String, String> paramMap) throws IOException {
         URL url = new URL(urlInfo);
         String param = createUrl(paramMap);
-        byte[] postDataBytes = param.toString().getBytes(StandardCharsets.UTF_8.name());
+        byte[] postDataBytes = param.replace("?","").toString().getBytes(StandardCharsets.UTF_8.name());
 
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod(HttpMethod.POST.name());
@@ -66,6 +66,8 @@ public class ApiCall {
         while((line = br.readLine()) != null){
             result.append(line);
         }
+
+        logger.info("result :: " + result.toString());
 
         br.close();
         connection.disconnect();

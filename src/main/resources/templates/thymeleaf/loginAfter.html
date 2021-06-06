@@ -10,13 +10,21 @@
         <input type="hidden" name="accessToken" th:value="${token.access_token}">
     </form>
 
-    <input type="button" value="로그아웃" onclick="logout();"/>
+    <input type="button" value="로그아웃" th:onclick="logout([[${path}]]);"/>
 
     <script>
-        function logout(){
-            document.frm.action = '/kakao/logout';
+        function logout(path){
+            if(path == 'google')
+                window.open('https://accounts.google.com/logout', 'googleLogout', 'width=600, height=400');
+
+            formSubmit(path);
+        }
+
+        function formSubmit(path){
+            document.frm.action = '/' + path + '/logout';
             document.frm.submit();
         }
+
     </script>
 </body>
 </html>

@@ -17,8 +17,11 @@ public class GoogleApi {
     private String clientPassword;
     private String authHost;
     private String authPath;
+    private String apiHost;
+    private String tokenPath;
     private String redirectUri;
     private String responseType;
     private String scope;
     private String access_type;
+    private String grant_type;
 }

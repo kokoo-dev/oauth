@@ -30,7 +30,8 @@ public class KakaoController {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("thymeleaf/loginAfter");
         mav.addObject("token", tokenObject);
-        session.setAttribute("kakaoToken", tokenObject.get("access_token"));
+        mav.addObject("path", "kakao");
+        session.setAttribute("oauthToken", tokenObject.get("access_token"));
 
         logger.info(tokenObject.toString());
 
@@ -43,8 +44,8 @@ public class KakaoController {
 
         JSONObject logoutObject = kakaoService.logout(kakaoToken.getAccessToken());
 
-        if(session.getAttribute("kakaoToken") != null && logoutObject.get("id") != null){
-            session.removeAttribute("kakaoToken");
+        if(session.getAttribute("oauthToken") != null && logoutObject.get("id") != null){
+            session.removeAttribute("oauthToken");
         }
 
         logger.info(logoutObject.toString());
