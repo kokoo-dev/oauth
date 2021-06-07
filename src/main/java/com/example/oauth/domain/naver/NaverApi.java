@@ -1,4 +1,4 @@
-package com.example.oauth.domain.kakao;
+package com.example.oauth.domain.naver;
 
 import com.example.oauth.config.YamlPropertySourceFactory;
 import lombok.Getter;
@@ -9,18 +9,18 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource(value = "classpath:oauth.yml", factory = YamlPropertySourceFactory.class)
-@ConfigurationProperties(prefix = "kakao")
+@ConfigurationProperties(prefix = "naver")
 @Getter
 @Setter
-public class KakaoApi {
+public class NaverApi {
+    private String clientId;
+    private String clientSecret;
     private String authHost;
-    private String apiHost;
-    private String authorizePath;
+    private String authPath;
     private String tokenPath;
-    private String logoutPath;
-    private String apiKey;
-    private String redirectUri;
     private String responseType;
+    private String redirectUri;
     private String grantTypeIssue;
-    private String logoutType;
+    private String grantTypeDelete;
+    private String serviceProvider;
 }

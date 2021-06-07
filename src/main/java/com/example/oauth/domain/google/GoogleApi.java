@@ -22,6 +22,6 @@ public class GoogleApi {
     private String redirectUri;
     private String responseType;
     private String scope;
-    private String access_type;
-    private String grant_type;
+    private String accessType;
+    private String grantTypeIssue;
 }

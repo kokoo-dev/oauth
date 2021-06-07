@@ -1,5 +1,8 @@
 package com.example.oauth.domain.kakao;
 
+import lombok.Getter;
+
+@Getter
 public enum KakaoAuthCategory {
     CLIENT_ID("client_id", "앱 생성 시 발급받은 REST API"),
     REDIRECT_URI("redirect_uri", "인가 코드가 리다이렉트될 URI"),
@@ -13,13 +16,5 @@ public enum KakaoAuthCategory {
     private KakaoAuthCategory(String key, String description){
         this.key = key;
         this.description = description;
-    }
-
-    public String getKey(){
-        return key;
-    }
-
-    public String getDescription(){
-        return description;
     }
 }

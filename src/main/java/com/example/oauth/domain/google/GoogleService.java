@@ -1,7 +1,7 @@
 package com.example.oauth.domain.google;
 
 import com.example.oauth.common.ApiCall;
-import com.example.oauth.domain.OAuthService;
+import com.example.oauth.common.OAuthService;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class GoogleService implements OAuthService {
         map.put(GoogleTokenCategory.CLIENT_ID.getKey(), googleApi.getClientId());
         map.put(GoogleTokenCategory.CLIENT_SECRET.getKey(), googleApi.getClientPassword());
         map.put(GoogleTokenCategory.REDIRECT_URI.getKey(), googleApi.getRedirectUri());
-        map.put(GoogleTokenCategory.GRANT_TYPE.getKey(), googleApi.getGrant_type());
+        map.put(GoogleTokenCategory.GRANT_TYPE.getKey(), googleApi.getGrantTypeIssue());
 
         return map;
     }
@@ -50,11 +50,11 @@ public class GoogleService implements OAuthService {
     @Override
     public Map<String, String> createAuthParamMap(){
         Map<String, String> map = new HashMap<>();
-        map.put(GoogleAuth.CLIENT_ID.getKey(), googleApi.getClientId());
-        map.put(GoogleAuth.REDIRECT_URI.getKey(), googleApi.getRedirectUri());
-        map.put(GoogleAuth.SCOPE.getKey(), googleApi.getScope());
-        map.put(GoogleAuth.RESPONSE_TYPE.getKey(), googleApi.getResponseType());
-        map.put(GoogleAuth.ACCESS_TYPE.getKey(), googleApi.getAccess_type());
+        map.put(GoogleAuthCategory.CLIENT_ID.getKey(), googleApi.getClientId());
+        map.put(GoogleAuthCategory.REDIRECT_URI.getKey(), googleApi.getRedirectUri());
+        map.put(GoogleAuthCategory.SCOPE.getKey(), googleApi.getScope());
+        map.put(GoogleAuthCategory.RESPONSE_TYPE.getKey(), googleApi.getResponseType());
+        map.put(GoogleAuthCategory.ACCESS_TYPE.getKey(), googleApi.getAccessType());
 
         return map;
     }

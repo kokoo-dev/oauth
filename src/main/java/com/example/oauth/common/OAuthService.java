@@ -1,4 +1,4 @@
-package com.example.oauth.domain;
+package com.example.oauth.common;
 
 import org.json.simple.JSONObject;
 

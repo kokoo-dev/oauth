@@ -1,7 +1,7 @@
 package com.example.oauth.domain.kakao;
 
 import com.example.oauth.common.ApiCall;
-import com.example.oauth.domain.OAuthService;
+import com.example.oauth.common.OAuthService;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +63,7 @@ public class KakaoService implements OAuthService {
     @Override
     public Map<String, String> createTokenParamMap(String code){
         Map<String, String> map = new HashMap<>();
-        map.put(KakaoTokenCategory.GRANT_TYPE.getKey(), kakaoApi.getGrantType());
+        map.put(KakaoTokenCategory.GRANT_TYPE.getKey(), kakaoApi.getGrantTypeIssue());
         map.put(KakaoTokenCategory.CLIENT_ID.getKey(), kakaoApi.getApiKey());
         map.put(KakaoTokenCategory.REDIRECT_URI.getKey(), kakaoApi.getRedirectUri());
         map.put(KakaoTokenCategory.CODE.getKey(), code);

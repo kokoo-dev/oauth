@@ -1,5 +1,8 @@
 package com.example.oauth.domain.kakao;
 
+import lombok.Getter;
+
+@Getter
 public enum KakaoTokenCategory {
     GRANT_TYPE("grant_type", "authorization_code로 고정"),
     CLIENT_ID("client_id", "앱 생성 시 발급받은 REST API"),
@@ -15,11 +18,4 @@ public enum KakaoTokenCategory {
         this.description = description;
     }
 
-    public String getKey(){
-        return key;
-    }
-
-    public String getDescription(){
-        return description;
-    }
 }

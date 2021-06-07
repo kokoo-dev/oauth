@@ -1,11 +1,6 @@
-package com.example.oauth.domain.google;
+package com.example.oauth.domain.naver;
 
-import com.example.oauth.common.ApiCall;
-import com.example.oauth.domain.kakao.KakaoController;
-import com.example.oauth.domain.kakao.KakaoToken;
 import org.json.simple.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,38 +10,33 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 import java.util.Enumeration;
 
 @Controller
-@RequestMapping("/google")
-public class GoogleController {
-    Logger logger = LoggerFactory.getLogger(GoogleController.class);
-
+@RequestMapping("/naver")
+public class NaverController {
     @Autowired
-    GoogleService googleService;
+    NaverService naverService;
 
     @GetMapping("/oauth")
-    public ModelAndView oauth(HttpSession session){
-        logger.info("call.. oauth");
-
-        String access_token = (String)session.getAttribute("oauthToken");
-        JSONObject tokenObject = googleService.getToken(access_token);
+    public ModelAndView oauth(NaverToken naverToken, HttpSession session){
+        JSONObject tokenObject = naverService.getToken(naverToken.getCode());
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("thymeleaf/loginAfter");
         mav.addObject("token", tokenObject);
-        mav.addObject("path", "google");
+        mav.addObject("path", "naver");
         session.setAttribute("oauthToken", tokenObject.get("access_token"));
 
         return mav;
     }
 
     @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        logger.info("call.. logout");
+    public String logout(NaverToken naverToken, HttpSession session) {
+        String access_token = (String)session.getAttribute("oauthToken");
+        JSONObject logoutObject = naverService.logout(access_token);
 
-        if(session.getAttribute("oauthToken") != null){
+        if(access_token != null){
             session.removeAttribute("oauthToken");
         }
 

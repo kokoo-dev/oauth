@@ -1,6 +1,9 @@
 package com.example.oauth.domain.google;
 
-public enum GoogleAuth {
+import lombok.Getter;
+
+@Getter
+public enum GoogleAuthCategory {
     CLIENT_ID("client_id"),
     REDIRECT_URI("redirect_uri"),
     RESPONSE_TYPE("response_type"),
@@ -10,11 +13,7 @@ public enum GoogleAuth {
     private String key;
     private String description;
 
-    private GoogleAuth(String key){
+    private GoogleAuthCategory(String key){
         this.key = key;
-    }
-
-    public String getKey(){
-        return key;
     }
 }

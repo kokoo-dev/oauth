@@ -7,7 +7,7 @@
 <body>
     <div th:text="${token.access_token}"></div>
     <form method="post" name="frm" id="frm" action="">
-        <input type="hidden" name="accessToken" th:value="${token.access_token}">
+
     </form>
 
     <input type="button" value="로그아웃" th:onclick="logout([[${path}]]);"/>

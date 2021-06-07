@@ -39,10 +39,11 @@ public class KakaoController {
     }
 
     @PostMapping("/logout")
-    public String logout(KakaoToken kakaoToken, HttpSession session) {
+    public String logout(HttpSession session) {
         logger.info("call.. logout");
 
-        JSONObject logoutObject = kakaoService.logout(kakaoToken.getAccessToken());
+        String access_token = (String)session.getAttribute("oauthToken");
+        JSONObject logoutObject = kakaoService.logout(access_token);
 
         if(session.getAttribute("oauthToken") != null && logoutObject.get("id") != null){
             session.removeAttribute("oauthToken");

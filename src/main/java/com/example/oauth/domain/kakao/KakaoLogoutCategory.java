@@ -1,5 +1,8 @@
 package com.example.oauth.domain.kakao;
 
+import lombok.Getter;
+
+@Getter
 public enum KakaoLogoutCategory {
     AUTHORIZATION("Authorization", "사용자 인증 수단");
 
@@ -11,11 +14,4 @@ public enum KakaoLogoutCategory {
         this.description = description;
     }
 
-    public String getKey(){
-        return key;
-    }
-
-    public String getDescription(){
-        return description;
-    }
 }

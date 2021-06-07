@@ -1,5 +1,8 @@
 package com.example.oauth.domain.google;
 
+import lombok.Getter;
+
+@Getter
 public enum GoogleTokenCategory {
     CODE("code"),
     CLIENT_ID("client_id"),
@@ -10,9 +13,5 @@ public enum GoogleTokenCategory {
     private String key;
     private GoogleTokenCategory(String key){
         this.key = key;
-    }
-
-    public String getKey(){
-        return key;
     }
 }
