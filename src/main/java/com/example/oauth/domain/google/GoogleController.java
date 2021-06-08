@@ -27,11 +27,10 @@ public class GoogleController {
     GoogleService googleService;
 
     @GetMapping("/oauth")
-    public ModelAndView oauth(HttpSession session){
+    public ModelAndView oauth(GoogleToken googleToken, HttpSession session){
         logger.info("call.. oauth");
 
-        String access_token = (String)session.getAttribute("oauthToken");
-        JSONObject tokenObject = googleService.getToken(access_token);
+        JSONObject tokenObject = googleService.getToken(googleToken.getCode());
 
         ModelAndView mav = new ModelAndView();
         mav.setViewName("thymeleaf/loginAfter");

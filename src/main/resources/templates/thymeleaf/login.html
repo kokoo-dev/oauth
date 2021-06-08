@@ -7,7 +7,7 @@
 <body>
     <input type="button" th:onclick="move([[${kakaoUrl}]])" value="kakao"/>
     <input type="button" th:onclick="move([[${googleUrl}]]);" value="google"/>
-    <input type="button" onclick="move('facebook');" value="facebook"/>
+    <input type="button" th:onclick="move([[${facebookUrl}]]);" value="facebook"/>
     <input type="button" th:onclick="move([[${naverUrl}]]);" value="naver"/>
 
     <form method="post" name="" id="" action="">
