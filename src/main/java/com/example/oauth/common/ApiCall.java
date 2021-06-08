@@ -51,6 +51,15 @@ public class ApiCall {
         return getResponse(connection);
     }
 
+    public static JSONObject callDeleteApi(String urlInfo, String param) throws IOException {
+        URL url = new URL(urlInfo + param);
+        HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+        connection.setRequestMethod(HttpMethod.DELETE.name());
+        connection.setRequestProperty("Content-type", ContentType.APPLICATION_JSON.getType());
+
+        return getResponse(connection);
+    }
+
     private static JSONObject getResponse(HttpURLConnection connection) throws IOException{
         BufferedReader br;
         InputStream inputStream;
