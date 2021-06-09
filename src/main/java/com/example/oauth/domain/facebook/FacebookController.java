@@ -43,30 +43,16 @@ public class FacebookController {
     public String logout(HttpSession session) {
         String accessToken = (String)session.getAttribute("oauthToken");
 
-        Map<String, String> map = new HashMap<>();
-        map.put("input_token",accessToken);
-        map.put("access_token",accessToken);
+        JSONObject deleteObject = facebookService.logout(accessToken);
+        Boolean isSuccess = (Boolean) deleteObject.get("success");
 
-        String param = ApiCall.createUrl(map);
-        JSONObject jsonObject = null;
-        try {
-            jsonObject = ApiCall.callGetApi("https://graph.facebook.com/debug_token", param);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(isSuccess != null) {
+            if (isSuccess) {
+                session.removeAttribute("oauthToken");
+            }
         }
 
-        JSONObject dataObject = (JSONObject)jsonObject.get("data");
-
-        JSONObject deleteObject = null;
-
-        try {
-            deleteObject = ApiCall.callDeleteApi("https://graph.facebook.com/" + dataObject.get("user_id") + "/permissions","?access_token=" + accessToken);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        logger.info(deleteObject.toString());
-
-        return "";
+        return "redirect:/";
     }
+
 }

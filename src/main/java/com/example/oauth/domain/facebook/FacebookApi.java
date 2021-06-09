@@ -20,4 +20,6 @@ public class FacebookApi {
     private String tokenHost;
     private String tokenPath;
     private String redirectUri;
+    private String debugTokenPath;
+    private String permissionsPath;
 }

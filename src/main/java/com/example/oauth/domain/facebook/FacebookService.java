@@ -62,4 +62,48 @@ public class FacebookService implements OAuthService {
 
         return map;
     }
+
+    public JSONObject logout(String accessToken){
+        Map<String, String> debugParamMap = createDebugTokenParamMap(accessToken);
+        String debugParam = ApiCall.createUrl(debugParamMap);
+        String requestDebugUrl = facebookApi.getTokenHost() + facebookApi.getDebugTokenPath();
+        JSONObject debugObject = null;
+
+        try {
+            debugObject = ApiCall.callGetApi(requestDebugUrl, debugParam);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        JSONObject dataObject = (JSONObject)debugObject.get("data");
+        String userId = dataObject.get("user_id").toString();
+
+        Map<String, String> deleteParamMap = createDeleteTokenParamMap(accessToken);
+        String deleteParam = ApiCall.createUrl(deleteParamMap);
+        String requestDeleteUrl = facebookApi.getTokenHost() + facebookApi.getPermissionsPath().replace("@userId", userId);
+        JSONObject deleteObject = null;
+
+        try {
+            deleteObject = ApiCall.callDeleteApi(requestDeleteUrl,deleteParam);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return deleteObject;
+    }
+
+    public Map<String, String> createDebugTokenParamMap(String accessToken){
+        Map<String, String> map = new HashMap<>();
+        map.put("input_token",accessToken);
+        map.put("access_token",accessToken);
+
+        return map;
+    }
+
+    public Map<String, String> createDeleteTokenParamMap(String accessToken){
+        Map<String, String> map = new HashMap<>();
+        map.put("access_token",accessToken);
+
+        return map;
+    }
 }

@@ -36,20 +36,6 @@ public class KakaoService implements OAuthService {
         return jsonObject;
     }
 
-    public JSONObject logout(String accessToken){
-        String requestUrl = kakaoApi.getApiHost() + kakaoApi.getLogoutPath();
-        JSONObject jsonObject = null;
-
-        try {
-            jsonObject = ApiCall.callPostApi(requestUrl, KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getLogoutType() + " " + accessToken);
-        } catch (IOException ie){
-            logger.error(ie.getMessage());
-        }
-
-        return jsonObject;
-
-    }
-
     @Override
     public Map<String, String> createAuthParamMap(){
         Map<String, String> map = new HashMap<>();
@@ -69,6 +55,20 @@ public class KakaoService implements OAuthService {
         map.put(KakaoTokenCategory.CODE.getKey(), code);
 
         return map;
+    }
+
+    public JSONObject logout(String accessToken){
+        String requestUrl = kakaoApi.getApiHost() + kakaoApi.getLogoutPath();
+        JSONObject jsonObject = null;
+
+        try {
+            jsonObject = ApiCall.callPostApi(requestUrl, KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getLogoutType() + " " + accessToken);
+        } catch (IOException ie){
+            logger.error(ie.getMessage());
+        }
+
+        return jsonObject;
+
     }
 
     public Map<String, String> createLogoutParamMap(String accessToken){

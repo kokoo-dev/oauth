@@ -64,8 +64,8 @@ public class NaverService implements OAuthService {
         return map;
     }
 
-    public JSONObject logout(String access_token){
-        Map<String, String> paramMap = createLogoutParamMap(access_token);
+    public JSONObject logout(String accessToken){
+        Map<String, String> paramMap = createLogoutParamMap(accessToken);
         String requestUrl = naverApi.getAuthHost() + naverApi.getTokenPath();
         String param = ApiCall.createUrl(paramMap);
         JSONObject jsonObject = null;
@@ -79,12 +79,12 @@ public class NaverService implements OAuthService {
         return jsonObject;
     }
 
-    public Map<String, String> createLogoutParamMap(String access_token) {
+    public Map<String, String> createLogoutParamMap(String accessToken) {
         Map<String, String> map = new HashMap<>();
         map.put(NaverTokenCategory.GRANT_TYPE.getKey(), naverApi.getGrantTypeDelete());
         map.put(NaverTokenCategory.CLIENT_ID.getKey(), naverApi.getClientId());
         map.put(NaverTokenCategory.CLIENT_SECRET.getKey(), naverApi.getClientSecret());
-        map.put(NaverTokenCategory.ACCESS_TOKEN.getKey(), access_token);
+        map.put(NaverTokenCategory.ACCESS_TOKEN.getKey(), accessToken);
         map.put(NaverTokenCategory.SERVICE_PROVIDER.getKey(), naverApi.getServiceProvider());
 
         return map;
