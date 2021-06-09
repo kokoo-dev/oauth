@@ -1,6 +1,7 @@
 package com.example.oauth.domain.facebook;
 
 import com.example.oauth.common.ApiCall;
+import com.example.oauth.common.ControllerUtil;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +31,7 @@ public class FacebookController {
     public ModelAndView oauth(FacebookToken facebookToken, HttpSession session){
         JSONObject tokenObject = facebookService.getToken(facebookToken.getCode());
 
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("thymeleaf/loginAfter");
-        mav.addObject("token", tokenObject);
-        mav.addObject("path", "facebook");
-        session.setAttribute("oauthToken", tokenObject.get("access_token"));
+        ModelAndView mav = ControllerUtil.getLoginAfterMav("facebook", tokenObject, session);
 
         return mav;
     }

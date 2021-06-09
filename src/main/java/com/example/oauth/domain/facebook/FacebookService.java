@@ -94,15 +94,15 @@ public class FacebookService implements OAuthService {
 
     public Map<String, String> createDebugTokenParamMap(String accessToken){
         Map<String, String> map = new HashMap<>();
-        map.put("input_token",accessToken);
-        map.put("access_token",accessToken);
+        map.put(FacebookTokenCategory.INPUT_TOKEN.getKey(),accessToken);
+        map.put(FacebookTokenCategory.ACCESS_TOKEN.getKey(), accessToken);
 
         return map;
     }
 
     public Map<String, String> createDeleteTokenParamMap(String accessToken){
         Map<String, String> map = new HashMap<>();
-        map.put("access_token",accessToken);
+        map.put(FacebookTokenCategory.ACCESS_TOKEN.getKey(),accessToken);
 
         return map;
     }

@@ -1,5 +1,6 @@
 package com.example.oauth.domain.kakao;
 
+import com.example.oauth.common.ControllerUtil;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,11 +28,7 @@ public class KakaoController {
 
         JSONObject tokenObject = kakaoService.getToken(kakaoToken.getCode());
 
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("thymeleaf/loginAfter");
-        mav.addObject("token", tokenObject);
-        mav.addObject("path", "kakao");
-        session.setAttribute("oauthToken", tokenObject.get("access_token"));
+        ModelAndView mav = ControllerUtil.getLoginAfterMav("kakao", tokenObject, session);
 
         logger.info(tokenObject.toString());
 

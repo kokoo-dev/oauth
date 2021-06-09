@@ -45,7 +45,6 @@ public class NaverService implements OAuthService {
         map.put(NaverTokenCategory.CLIENT_SECRET.getKey(), naverApi.getClientSecret());
         map.put(NaverTokenCategory.REDIRECT_URI.getKey(), naverApi.getRedirectUri());
         map.put(NaverTokenCategory.CODE.getKey(), code);
-//        map.put(NaverTokenCategory.STATE.getKey(), );
 
         return map;
     }

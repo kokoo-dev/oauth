@@ -1,5 +1,6 @@
 package com.example.oauth.domain.naver;
 
+import com.example.oauth.common.ControllerUtil;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,11 +23,7 @@ public class NaverController {
     public ModelAndView oauth(NaverToken naverToken, HttpSession session){
         JSONObject tokenObject = naverService.getToken(naverToken.getCode());
 
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("thymeleaf/loginAfter");
-        mav.addObject("token", tokenObject);
-        mav.addObject("path", "naver");
-        session.setAttribute("oauthToken", tokenObject.get("access_token"));
+        ModelAndView mav = ControllerUtil.getLoginAfterMav("naver", tokenObject, session);
 
         return mav;
     }

@@ -1,6 +1,7 @@
 package com.example.oauth.domain.google;
 
 import com.example.oauth.common.ApiCall;
+import com.example.oauth.common.ControllerUtil;
 import com.example.oauth.domain.kakao.KakaoController;
 import com.example.oauth.domain.kakao.KakaoToken;
 import org.json.simple.JSONObject;
@@ -32,11 +33,7 @@ public class GoogleController {
 
         JSONObject tokenObject = googleService.getToken(googleToken.getCode());
 
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("thymeleaf/loginAfter");
-        mav.addObject("token", tokenObject);
-        mav.addObject("path", "google");
-        session.setAttribute("oauthToken", tokenObject.get("access_token"));
+        ModelAndView mav = ControllerUtil.getLoginAfterMav("google", tokenObject, session);
 
         return mav;
     }
