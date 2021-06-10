@@ -1,7 +1,7 @@
 package com.example.oauth.domain.google;
 
 import com.example.oauth.common.ApiCall;
-import com.example.oauth.common.OAuthService;
+import com.example.oauth.domain.oauth.OAuthService;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,5 +57,10 @@ public class GoogleService implements OAuthService {
         map.put(GoogleAuthCategory.ACCESS_TYPE.getKey(), googleApi.getAccessType());
 
         return map;
+    }
+
+    @Override
+    public JSONObject logout(String accessToken) {
+        return null;
     }
 }

@@ -1,6 +1,6 @@
 package com.example.oauth.domain.kakao;
 
-import com.example.oauth.common.ControllerUtil;
+import com.example.oauth.common.CommonUtil;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class KakaoController {
 
         JSONObject tokenObject = kakaoService.getToken(kakaoToken.getCode());
 
-        ModelAndView mav = ControllerUtil.getLoginAfterMav("kakao", tokenObject, session);
+        ModelAndView mav = CommonUtil.getLoginAfterMav("kakao", tokenObject, session);
 
         logger.info(tokenObject.toString());
 

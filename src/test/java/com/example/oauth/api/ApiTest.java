@@ -4,7 +4,6 @@ import com.example.oauth.common.ApiCall;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,7 +21,7 @@ public class ApiTest {
         map.put("param2", "456");
         map.put("param3", "789");
 
-        assertEquals(result, ApiCall.createUrl(map));
+        assertEquals(result, ApiCall.createQueryStr(map));
     }
 
     @Test
@@ -34,7 +33,7 @@ public class ApiTest {
         map.put("param2", null);
         map.put("param3", null);
 
-        assertEquals(result, ApiCall.createUrl(map));
+        assertEquals(result, ApiCall.createQueryStr(map));
     }
 
 }

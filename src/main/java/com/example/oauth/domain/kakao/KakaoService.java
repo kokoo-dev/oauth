@@ -1,7 +1,7 @@
 package com.example.oauth.domain.kakao;
 
 import com.example.oauth.common.ApiCall;
-import com.example.oauth.common.OAuthService;
+import com.example.oauth.domain.oauth.OAuthService;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class KakaoService implements OAuthService {
         Map<String, String> paramMap = createTokenParamMap(code);
 
         String requestUrl = kakaoApi.getAuthHost() + kakaoApi.getTokenPath();
-        String param = ApiCall.createUrl(paramMap);
+        String param = ApiCall.createQueryStr(paramMap);
 
         JSONObject jsonObject = null;
 
@@ -57,11 +57,15 @@ public class KakaoService implements OAuthService {
         return map;
     }
 
+    @Override
     public JSONObject logout(String accessToken){
         String requestUrl = kakaoApi.getApiHost() + kakaoApi.getLogoutPath();
+//        Map<String, String> paramMap = createLogoutParamMap(accessToken);
+
         JSONObject jsonObject = null;
 
         try {
+//            jsonObject = ApiCall.callPostApi(requestUrl, paramMap);
             jsonObject = ApiCall.callPostApi(requestUrl, KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getLogoutType() + " " + accessToken);
         } catch (IOException ie){
             logger.error(ie.getMessage());

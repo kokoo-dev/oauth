@@ -1,7 +1,8 @@
 package com.example.oauth.domain.facebook;
 
 import com.example.oauth.common.ApiCall;
-import com.example.oauth.common.OAuthService;
+import com.example.oauth.common.CommonUtil;
+import com.example.oauth.domain.oauth.OAuthService;
 import com.example.oauth.domain.naver.NaverAuthCategory;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -10,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +25,7 @@ public class FacebookService implements OAuthService {
     public JSONObject getToken(String code) {
         Map<String, String> paramMap = createTokenParamMap(code);
         String requestUrl = facebookApi.getTokenHost() + facebookApi.getTokenPath();
-        String param = ApiCall.createUrl(paramMap);
+        String param = ApiCall.createQueryStr(paramMap);
 
         JSONObject jsonObject = null;
 
@@ -52,8 +51,7 @@ public class FacebookService implements OAuthService {
 
     @Override
     public Map<String, String> createAuthParamMap() {
-        SecureRandom random = new SecureRandom();
-        String state = new BigInteger(130, random).toString();
+        String state = CommonUtil.getRandomNumStr(130);
         Map<String, String> map = new HashMap<>();
 
         map.put(NaverAuthCategory.CLIENT_ID.getKey(), facebookApi.getClientId());
@@ -63,9 +61,10 @@ public class FacebookService implements OAuthService {
         return map;
     }
 
+    @Override
     public JSONObject logout(String accessToken){
         Map<String, String> debugParamMap = createDebugTokenParamMap(accessToken);
-        String debugParam = ApiCall.createUrl(debugParamMap);
+        String debugParam = ApiCall.createQueryStr(debugParamMap);
         String requestDebugUrl = facebookApi.getTokenHost() + facebookApi.getDebugTokenPath();
         JSONObject debugObject = null;
 
@@ -79,7 +78,7 @@ public class FacebookService implements OAuthService {
         String userId = dataObject.get("user_id").toString();
 
         Map<String, String> deleteParamMap = createDeleteTokenParamMap(accessToken);
-        String deleteParam = ApiCall.createUrl(deleteParamMap);
+        String deleteParam = ApiCall.createQueryStr(deleteParamMap);
         String requestDeleteUrl = facebookApi.getTokenHost() + facebookApi.getPermissionsPath().replace("@userId", userId);
         JSONObject deleteObject = null;
 

@@ -4,14 +4,15 @@ import lombok.Getter;
 
 @Getter
 public enum KakaoLogoutCategory {
-    AUTHORIZATION("Authorization", "사용자 인증 수단");
+    AUTHORIZATION("Authorization"),
+    CLIENT_ID("client_id"),
+    LOGOUT_REDIRECT_URI("logout_redirect_uri"),
+    STATE("state");
 
     private String key;
-    private String description;
 
-    private KakaoLogoutCategory(String key, String description){
+    private KakaoLogoutCategory(String key){
         this.key = key;
-        this.description = description;
     }
 
 }

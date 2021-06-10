@@ -1,6 +1,5 @@
 package com.example.oauth.common;
 
-import com.example.oauth.domain.kakao.KakaoController;
 import com.nimbusds.common.contenttype.ContentType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,6 +10,7 @@ import org.springframework.http.HttpMethod;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.Set;
@@ -20,8 +20,8 @@ public class ApiCall {
 
     public static JSONObject callPostApi(String urlInfo, Map<String, String> paramMap) throws IOException {
         URL url = new URL(urlInfo);
-        String param = createUrl(paramMap);
-        byte[] postDataBytes = param.replace("?","").toString().getBytes(StandardCharsets.UTF_8.name());
+        String param = createQueryStr(paramMap);
+        byte[] postDataBytes = URLEncoder.encode(param.substring(1),"UTF-8").getBytes(StandardCharsets.UTF_8.name());
 
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod(HttpMethod.POST.name());
@@ -42,8 +42,8 @@ public class ApiCall {
         return getResponse(connection);
     }
 
-    public static JSONObject callGetApi(String urlInfo, String param) throws IOException {
-        URL url = new URL(urlInfo + param);
+    public static JSONObject callGetApi(String urlInfo, String queryStr) throws IOException {
+        URL url = new URL(urlInfo + queryStr);
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod(HttpMethod.GET.name());
         connection.setRequestProperty("Content-type", ContentType.APPLICATION_JSON.getType());
@@ -51,8 +51,8 @@ public class ApiCall {
         return getResponse(connection);
     }
 
-    public static JSONObject callDeleteApi(String urlInfo, String param) throws IOException {
-        URL url = new URL(urlInfo + param);
+    public static JSONObject callDeleteApi(String urlInfo, String queryStr) throws IOException {
+        URL url = new URL(urlInfo + queryStr);
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
         connection.setRequestMethod(HttpMethod.DELETE.name());
         connection.setRequestProperty("Content-type", ContentType.APPLICATION_JSON.getType());
@@ -64,7 +64,7 @@ public class ApiCall {
         BufferedReader br;
         InputStream inputStream;
 
-        if(connection.getResponseCode() == HttpURLConnection.HTTP_OK)
+        if(connection.getResponseCode() == HttpURLConnection.HTTP_OK || connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP)
             br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8.name()));
         else
             br = new BufferedReader(new InputStreamReader(connection.getErrorStream(), StandardCharsets.UTF_8.name()));
@@ -94,7 +94,7 @@ public class ApiCall {
         return jsonObject;
     }
 
-    public static String createUrl(Map<String, String> urlMap){
+    public static String createQueryStr(Map<String, String> urlMap){
         StringBuilder urlBuilder = new StringBuilder();
         Set<String> keys = urlMap.keySet();
         String link = "?";

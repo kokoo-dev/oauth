@@ -1,9 +1,6 @@
 package com.example.oauth.domain.google;
 
-import com.example.oauth.common.ApiCall;
-import com.example.oauth.common.ControllerUtil;
-import com.example.oauth.domain.kakao.KakaoController;
-import com.example.oauth.domain.kakao.KakaoToken;
+import com.example.oauth.common.CommonUtil;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.util.Enumeration;
 
 @Controller
 @RequestMapping("/google")
@@ -33,7 +27,7 @@ public class GoogleController {
 
         JSONObject tokenObject = googleService.getToken(googleToken.getCode());
 
-        ModelAndView mav = ControllerUtil.getLoginAfterMav("google", tokenObject, session);
+        ModelAndView mav = CommonUtil.getLoginAfterMav("google", tokenObject, session);
 
         return mav;
     }

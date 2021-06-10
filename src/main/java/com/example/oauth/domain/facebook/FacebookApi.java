@@ -1,6 +1,7 @@
 package com.example.oauth.domain.facebook;
 
 import com.example.oauth.config.YamlPropertySourceFactory;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
