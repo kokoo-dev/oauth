@@ -1,6 +1,6 @@
 package com.example.oauth.api;
 
-import com.example.oauth.common.ApiCall;
+import com.example.oauth.global.common.ApiCall;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
