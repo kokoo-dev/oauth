@@ -38,9 +38,7 @@ public class GoogleController {
     public String logout(HttpSession session) {
         logger.info("call.. logout");
 
-        if(session.getAttribute("oauthToken") != null){
-            session.removeAttribute("oauthToken");
-        }
+        ControllerUtil.removeSession(session, "oauthToken");
 
         return "redirect:/";
     }

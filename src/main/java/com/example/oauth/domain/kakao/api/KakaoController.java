@@ -44,8 +44,8 @@ public class KakaoController {
         String access_token = (String)session.getAttribute("oauthToken");
         JSONObject logoutObject = kakaoServiceImpl.logout(access_token);
 
-        if(session.getAttribute("oauthToken") != null && logoutObject.get("id") != null){
-            session.removeAttribute("oauthToken");
+        if(logoutObject.get("id") != null){
+            ControllerUtil.removeSession(session, "oauthToken");
         }
 
         logger.info(logoutObject.toString());

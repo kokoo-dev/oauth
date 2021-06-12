@@ -1,5 +1,6 @@
 package com.example.oauth.global.common;
 
+import com.example.oauth.global.util.UrlUtil;
 import com.nimbusds.common.contenttype.ContentType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -19,8 +20,8 @@ public class ApiCall {
 
     public static JSONObject callPostApi(String urlInfo, Map<String, String> paramMap) throws IOException {
         URL url = new URL(urlInfo);
-        String param = createQueryStr(paramMap);
-        String postParam = changeGetParamToPostParam(param);
+        String param = UrlUtil.createQueryStr(paramMap);
+        String postParam = UrlUtil.changeGetParamToPostParam(param);
         byte[] postDataBytes = postParam.getBytes(StandardCharsets.UTF_8.name());
 
         HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -94,30 +95,5 @@ public class ApiCall {
         return jsonObject;
     }
 
-    public static String createQueryStr(Map<String, String> urlMap){
-        StringBuilder urlBuilder = new StringBuilder();
-        Set<String> keys = urlMap.keySet();
-        String link = "?";
-        String equal = "=";
 
-        for(String key : keys){
-            String value = urlMap.get(key) == null ? "" : urlMap.get(key);
-
-            urlBuilder.append(link + key + equal + value);
-
-            if("?".equals(link))
-                link = "&";
-        }
-
-        return urlBuilder.toString();
-    }
-
-    public static String changeGetParamToPostParam(String queryStr){
-        String result = queryStr;
-
-        if(queryStr.startsWith("?"))
-            result = queryStr.substring(1);
-
-        return result;
-    }
 }

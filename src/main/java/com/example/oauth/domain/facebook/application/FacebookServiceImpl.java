@@ -6,6 +6,7 @@ import com.example.oauth.global.common.ApiCall;
 import com.example.oauth.global.util.RandomUtil;
 import com.example.oauth.domain.oauth.OAuthService;
 import com.example.oauth.domain.naver.domain.NaverAuthCategory;
+import com.example.oauth.global.util.UrlUtil;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class FacebookServiceImpl implements OAuthService {
     public JSONObject getToken(String code) {
         Map<String, String> paramMap = createTokenParamMap(code);
         String requestUrl = facebookApi.getTokenHost() + facebookApi.getTokenPath();
-        String param = ApiCall.createQueryStr(paramMap);
+        String param = UrlUtil.createQueryStr(paramMap);
 
         JSONObject jsonObject = null;
 
@@ -66,7 +67,7 @@ public class FacebookServiceImpl implements OAuthService {
     @Override
     public JSONObject logout(String accessToken){
         Map<String, String> debugParamMap = createDebugTokenParamMap(accessToken);
-        String debugParam = ApiCall.createQueryStr(debugParamMap);
+        String debugParam = UrlUtil.createQueryStr(debugParamMap);
         String requestDebugUrl = facebookApi.getTokenHost() + facebookApi.getDebugTokenPath();
         JSONObject debugObject = null;
 
@@ -80,7 +81,7 @@ public class FacebookServiceImpl implements OAuthService {
         String userId = dataObject.get("user_id").toString();
 
         Map<String, String> deleteParamMap = createDeleteTokenParamMap(accessToken);
-        String deleteParam = ApiCall.createQueryStr(deleteParamMap);
+        String deleteParam = UrlUtil.createQueryStr(deleteParamMap);
         String requestDeleteUrl = facebookApi.getTokenHost() + facebookApi.getPermissionsPath().replace("@userId", userId);
         JSONObject deleteObject = null;
 

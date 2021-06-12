@@ -29,12 +29,12 @@ public class NaverController {
     }
 
     @PostMapping("/logout")
-    public String logout(NaverToken naverToken, HttpSession session) {
+    public String logout(HttpSession session) {
         String access_token = (String)session.getAttribute("oauthToken");
         JSONObject logoutObject = naverServiceImpl.logout(access_token);
 
         if(access_token != null){
-            session.removeAttribute("oauthToken");
+            ControllerUtil.removeSession(session, "oauthToken");
         }
 
         return "redirect:/";

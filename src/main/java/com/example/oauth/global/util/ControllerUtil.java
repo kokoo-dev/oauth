@@ -25,5 +25,14 @@ public class ControllerUtil {
 
         return mav;
     }
+
+    public static boolean removeSession(HttpSession session, String name){
+        if(session.getAttribute(name) != null) {
+            session.removeAttribute(name);
+            return true;
+        }
+
+        return false;
+    }
 }
 

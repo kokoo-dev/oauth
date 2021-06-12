@@ -6,6 +6,7 @@ import com.example.oauth.domain.naver.domain.NaverTokenCategory;
 import com.example.oauth.global.common.ApiCall;
 import com.example.oauth.global.util.RandomUtil;
 import com.example.oauth.domain.oauth.OAuthService;
+import com.example.oauth.global.util.UrlUtil;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class NaverServiceImpl implements OAuthService {
     public JSONObject getToken(String code) {
         Map<String, String> paramMap = createTokenParamMap(code);
         String requestUrl = naverApi.getAuthHost() + naverApi.getTokenPath();
-        String param = ApiCall.createQueryStr(paramMap);
+        String param = UrlUtil.createQueryStr(paramMap);
         JSONObject jsonObject = null;
 
         try {
@@ -68,7 +69,7 @@ public class NaverServiceImpl implements OAuthService {
     public JSONObject logout(String accessToken){
         Map<String, String> paramMap = createLogoutParamMap(accessToken);
         String requestUrl = naverApi.getAuthHost() + naverApi.getTokenPath();
-        String param = ApiCall.createQueryStr(paramMap);
+        String param = UrlUtil.createQueryStr(paramMap);
         JSONObject jsonObject = null;
 
         try {

@@ -6,6 +6,7 @@ import com.example.oauth.domain.kakao.domain.KakaoLogoutCategory;
 import com.example.oauth.domain.kakao.domain.KakaoTokenCategory;
 import com.example.oauth.global.common.ApiCall;
 import com.example.oauth.domain.oauth.OAuthService;
+import com.example.oauth.global.util.UrlUtil;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class KakaoServiceImpl implements OAuthService {
         Map<String, String> paramMap = createTokenParamMap(code);
 
         String requestUrl = kakaoApi.getAuthHost() + kakaoApi.getTokenPath();
-        String param = ApiCall.createQueryStr(paramMap);
+        String param = UrlUtil.createQueryStr(paramMap);
 
         JSONObject jsonObject = null;
 
@@ -70,7 +71,7 @@ public class KakaoServiceImpl implements OAuthService {
 
         try {
 //            jsonObject = ApiCall.callPostApi(requestUrl, paramMap);
-            jsonObject = ApiCall.callPostApi(requestUrl, KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getLogoutType() + " " + accessToken);
+            jsonObject = ApiCall.callPostApi(requestUrl, KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getAuthType() + " " + accessToken);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }
@@ -81,7 +82,7 @@ public class KakaoServiceImpl implements OAuthService {
 
     public Map<String, String> createLogoutParamMap(String accessToken){
         Map<String, String> map = new HashMap<>();
-        map.put(KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getLogoutType() + " " + accessToken);
+        map.put(KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getAuthType() + " " + accessToken);
 
         return map;
     }

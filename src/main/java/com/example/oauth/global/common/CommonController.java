@@ -8,6 +8,7 @@ import com.example.oauth.domain.kakao.domain.KakaoApi;
 import com.example.oauth.domain.kakao.applictaion.KakaoServiceImpl;
 import com.example.oauth.domain.naver.domain.NaverApi;
 import com.example.oauth.domain.naver.application.NaverServiceImpl;
+import com.example.oauth.global.util.UrlUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,10 +43,10 @@ public class CommonController {
     @GetMapping("/")
     public ModelAndView loginView(){
         ModelAndView mav = new ModelAndView();
-        String kakaoUrl = kakaoApi.getAuthHost() + kakaoApi.getAuthorizePath() + ApiCall.createQueryStr(kakaoServiceImpl.createAuthParamMap());
-        String googleUrl = googleApi.getAuthHost() + googleApi.getAuthPath() + ApiCall.createQueryStr(googleServiceImpl.createAuthParamMap());
-        String naverUrl = naverApi.getAuthHost() + naverApi.getAuthPath() + ApiCall.createQueryStr(naverServiceImpl.createAuthParamMap());
-        String facebookUrl = facebookApi.getAuthHost() + facebookApi.getAuthPath() + ApiCall.createQueryStr(facebookServiceImpl.createAuthParamMap());
+        String kakaoUrl = kakaoApi.getAuthHost() + kakaoApi.getAuthorizePath() + UrlUtil.createQueryStr(kakaoServiceImpl.createAuthParamMap());
+        String googleUrl = googleApi.getAuthHost() + googleApi.getAuthPath() + UrlUtil.createQueryStr(googleServiceImpl.createAuthParamMap());
+        String naverUrl = naverApi.getAuthHost() + naverApi.getAuthPath() + UrlUtil.createQueryStr(naverServiceImpl.createAuthParamMap());
+        String facebookUrl = facebookApi.getAuthHost() + facebookApi.getAuthPath() + UrlUtil.createQueryStr(facebookServiceImpl.createAuthParamMap());
 
         mav.setViewName("thymeleaf/login");
         mav.addObject("kakaoUrl", kakaoUrl);

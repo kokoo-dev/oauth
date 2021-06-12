@@ -22,5 +22,5 @@ public class KakaoApi {
     private String redirectUri;
     private String responseType;
     private String grantTypeIssue;
-    private String logoutType;
+    private String authType;
 }

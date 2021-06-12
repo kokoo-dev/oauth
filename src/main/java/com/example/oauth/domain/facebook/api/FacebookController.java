@@ -41,7 +41,7 @@ public class FacebookController {
 
         if(isSuccess != null) {
             if (isSuccess) {
-                session.removeAttribute("oauthToken");
+                ControllerUtil.removeSession(session, "oauthToken");
             }
         }
 
