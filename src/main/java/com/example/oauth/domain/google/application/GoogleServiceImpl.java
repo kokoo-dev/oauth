@@ -3,7 +3,7 @@ package com.example.oauth.domain.google.application;
 import com.example.oauth.domain.google.domain.GoogleApi;
 import com.example.oauth.domain.google.domain.GoogleAuthCategory;
 import com.example.oauth.domain.google.domain.GoogleTokenCategory;
-import com.example.oauth.global.common.ApiCall;
+import com.example.oauth.global.util.ApiUtil;
 import com.example.oauth.domain.oauth.OAuthService;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -30,7 +30,7 @@ public class GoogleServiceImpl implements OAuthService {
         JSONObject jsonObject = null;
 
         try {
-            jsonObject = ApiCall.callPostApi(requestUrl, paramMap);
+            jsonObject = ApiUtil.callPostApi(requestUrl, paramMap);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }

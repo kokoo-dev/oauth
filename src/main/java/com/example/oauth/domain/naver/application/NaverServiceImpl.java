@@ -3,7 +3,7 @@ package com.example.oauth.domain.naver.application;
 import com.example.oauth.domain.naver.domain.NaverApi;
 import com.example.oauth.domain.naver.domain.NaverAuthCategory;
 import com.example.oauth.domain.naver.domain.NaverTokenCategory;
-import com.example.oauth.global.common.ApiCall;
+import com.example.oauth.global.util.ApiUtil;
 import com.example.oauth.global.util.RandomUtil;
 import com.example.oauth.domain.oauth.OAuthService;
 import com.example.oauth.global.util.UrlUtil;
@@ -32,7 +32,7 @@ public class NaverServiceImpl implements OAuthService {
         JSONObject jsonObject = null;
 
         try {
-            jsonObject = ApiCall.callGetApi(requestUrl, param);
+            jsonObject = ApiUtil.callGetApi(requestUrl, param);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }
@@ -73,7 +73,7 @@ public class NaverServiceImpl implements OAuthService {
         JSONObject jsonObject = null;
 
         try {
-            jsonObject = ApiCall.callGetApi(requestUrl, param);
+            jsonObject = ApiUtil.callGetApi(requestUrl, param);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }

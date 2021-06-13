@@ -4,7 +4,7 @@ import com.example.oauth.domain.kakao.domain.KakaoApi;
 import com.example.oauth.domain.kakao.domain.KakaoAuthCategory;
 import com.example.oauth.domain.kakao.domain.KakaoLogoutCategory;
 import com.example.oauth.domain.kakao.domain.KakaoTokenCategory;
-import com.example.oauth.global.common.ApiCall;
+import com.example.oauth.global.util.ApiUtil;
 import com.example.oauth.domain.oauth.OAuthService;
 import com.example.oauth.global.util.UrlUtil;
 import org.json.simple.JSONObject;
@@ -33,7 +33,7 @@ public class KakaoServiceImpl implements OAuthService {
         JSONObject jsonObject = null;
 
         try {
-            jsonObject = ApiCall.callGetApi(requestUrl, param);
+            jsonObject = ApiUtil.callGetApi(requestUrl, param);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }
@@ -71,7 +71,7 @@ public class KakaoServiceImpl implements OAuthService {
 
         try {
 //            jsonObject = ApiCall.callPostApi(requestUrl, paramMap);
-            jsonObject = ApiCall.callPostApi(requestUrl, KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getAuthType() + " " + accessToken);
+            jsonObject = ApiUtil.callPostApi(requestUrl, KakaoLogoutCategory.AUTHORIZATION.getKey(), kakaoApi.getAuthType() + " " + accessToken);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }

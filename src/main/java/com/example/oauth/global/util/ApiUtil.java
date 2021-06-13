@@ -1,6 +1,5 @@
-package com.example.oauth.global.common;
+package com.example.oauth.global.util;
 
-import com.example.oauth.global.util.UrlUtil;
 import com.nimbusds.common.contenttype.ContentType;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -13,10 +12,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
-import java.util.Set;
 
-public class ApiCall {
-    static Logger logger = LoggerFactory.getLogger(ApiCall.class);
+public class ApiUtil {
+    static Logger logger = LoggerFactory.getLogger(ApiUtil.class);
 
     public static JSONObject callPostApi(String urlInfo, Map<String, String> paramMap) throws IOException {
         URL url = new URL(urlInfo);
@@ -62,31 +60,47 @@ public class ApiCall {
     }
 
     private static JSONObject getResponse(HttpURLConnection connection) throws IOException{
+        BufferedReader br = readResponseStream(connection);
+        String result = getResult(br);
+
+        logger.info("result :: " + result);
+
+        br.close();
+        connection.disconnect();
+
+        JSONObject jsonObject = convertStringToJson(result);
+
+        return jsonObject;
+    }
+
+    private static BufferedReader readResponseStream(HttpURLConnection connection) throws IOException{
         BufferedReader br;
-        InputStream inputStream;
 
         if(connection.getResponseCode() == HttpURLConnection.HTTP_OK || connection.getResponseCode() == HttpURLConnection.HTTP_MOVED_TEMP)
             br = new BufferedReader(new InputStreamReader(connection.getInputStream(), StandardCharsets.UTF_8.name()));
         else
             br = new BufferedReader(new InputStreamReader(connection.getErrorStream(), StandardCharsets.UTF_8.name()));
 
+        return br;
+    }
+
+    private static String getResult(BufferedReader bufferedReader) throws IOException {
         StringBuilder result = new StringBuilder();
         String line = "";
 
-        while((line = br.readLine()) != null){
+        while((line = bufferedReader.readLine()) != null){
             result.append(line);
         }
 
-        logger.info("result :: " + result.toString());
+        return result.toString();
+    }
 
-        br.close();
-        connection.disconnect();
-
+    private static JSONObject convertStringToJson(String s){
         JSONObject jsonObject = null;
 
         try {
             JSONParser jsonParser = new JSONParser();
-            jsonObject = (JSONObject) jsonParser.parse(result.toString());
+            jsonObject = (JSONObject) jsonParser.parse(s);
 
         } catch (ParseException ie){
             logger.error(ie.getMessage());
@@ -94,6 +108,5 @@ public class ApiCall {
 
         return jsonObject;
     }
-
 
 }

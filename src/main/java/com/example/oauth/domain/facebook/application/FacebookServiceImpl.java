@@ -2,7 +2,7 @@ package com.example.oauth.domain.facebook.application;
 
 import com.example.oauth.domain.facebook.domain.FacebookApi;
 import com.example.oauth.domain.facebook.domain.FacebookTokenCategory;
-import com.example.oauth.global.common.ApiCall;
+import com.example.oauth.global.util.ApiUtil;
 import com.example.oauth.global.util.RandomUtil;
 import com.example.oauth.domain.oauth.OAuthService;
 import com.example.oauth.domain.naver.domain.NaverAuthCategory;
@@ -33,7 +33,7 @@ public class FacebookServiceImpl implements OAuthService {
         JSONObject jsonObject = null;
 
         try {
-            jsonObject = ApiCall.callGetApi(requestUrl, param);
+            jsonObject = ApiUtil.callGetApi(requestUrl, param);
         } catch (IOException ie){
             logger.error(ie.getMessage());
         }
@@ -72,7 +72,7 @@ public class FacebookServiceImpl implements OAuthService {
         JSONObject debugObject = null;
 
         try {
-            debugObject = ApiCall.callGetApi(requestDebugUrl, debugParam);
+            debugObject = ApiUtil.callGetApi(requestDebugUrl, debugParam);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -86,7 +86,7 @@ public class FacebookServiceImpl implements OAuthService {
         JSONObject deleteObject = null;
 
         try {
-            deleteObject = ApiCall.callDeleteApi(requestDeleteUrl,deleteParam);
+            deleteObject = ApiUtil.callDeleteApi(requestDeleteUrl,deleteParam);
         } catch (IOException e) {
             e.printStackTrace();
         }
